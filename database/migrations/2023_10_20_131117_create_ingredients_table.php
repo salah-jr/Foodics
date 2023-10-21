@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('stock', 8, 2); // Stock level in kg
+            $table->float('available_stock', 8, 2); // Available stock level in kg
             $table->timestamps();
         });
     }
