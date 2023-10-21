@@ -1,4 +1,4 @@
-# Foodics Task
+# Foodics Technical Task
 
 ## Overview
 
