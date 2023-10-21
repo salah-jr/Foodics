@@ -22,7 +22,7 @@ class IngredientLowStockMail extends Mailable
     {
         return new Envelope(
             from: new Address('system@example.com', 'Store'),
-            replyTo: [
+            to: [
                 new Address('merchant@example.com', 'Merchant Name'),
             ],
             subject: $this->ingredient->name . ' Low Stock',
@@ -32,7 +32,7 @@ class IngredientLowStockMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.low-stock',
         );
     }
 
