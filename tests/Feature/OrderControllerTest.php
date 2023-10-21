@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Mail\IngredientLowStockMail;
 use App\Models\Ingredient;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class OrderControllerTest extends TestCase
@@ -187,5 +189,74 @@ class OrderControllerTest extends TestCase
 
         // Assuming 200g / 1000 = 0.2 kg               (deducted from 4.0 KG)
         $this->assertEquals(3.8, $updatedIngredient2->available_stock);
+    }
+
+    /**
+     * @test
+     */
+    public function itSendsAnEmailWhenAvailableStockReachesBelowFiftyPercent()
+    {
+        Mail::fake();
+
+        $product = Product::factory()->create();
+
+        $ingredient = Ingredient::factory()->create([
+            'stock' => 2.0, // 2 KG
+            'available_stock' => 2.0, // 2 KG
+        ]);
+
+        $product->ingredients()->attach($ingredient, ['quantity' => 1500]); // 1.5 KG
+
+        $response = $this->postJson('/api/place-order', [
+            'products' => [
+                ['product_id' => $product->id, 'quantity' => 1],
+            ],
+        ]);
+
+        $response->assertStatus(200);
+
+        Mail::assertSent(IngredientLowStockMail::class);
+    }
+
+    /**
+     * @test
+     */
+    public function itDontSendAnEmailIfIsSentBefore()
+    {
+        Mail::fake();
+
+        $product = Product::factory()->create();
+
+        $ingredient = Ingredient::factory()->create([
+            'stock' => 2.0, // 2 KG
+            'available_stock' => 2.0, // 2 KG
+        ]);
+
+        $product->ingredients()->attach($ingredient, ['quantity' => 600]); // 0.6 KG
+
+        $response = $this->postJson('/api/place-order', [
+            'products' => [
+                ['product_id' => $product->id, 'quantity' => 2],
+            ],
+        ]);
+
+        $response->assertStatus(200);
+
+        Mail::assertSent(IngredientLowStockMail::class);
+
+        $product2 = Product::factory()->create();
+        $product2->ingredients()->attach($ingredient, ['quantity' => 500]); // 0.5 KG
+
+        $response = $this->postJson('/api/place-order', [
+            'products' => [
+                ['product_id' => $product2->id, 'quantity' => 1],
+            ],
+        ]);
+
+        $response->assertStatus(200);
+
+        Mail::fake();
+
+        Mail::assertNotSent(IngredientLowStockMail::class);
     }
 }
