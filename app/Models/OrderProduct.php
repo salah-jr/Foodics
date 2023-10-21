@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class OrderProduct extends Pivot
 {
     use HasFactory;
+
+    protected $table = 'order_products';
+    protected $guarded = ['id'];
 }

@@ -9,6 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function ingredients()
     {
         return $this->belongsToMany(Ingredient::class, ProductIngredient::class)
@@ -17,7 +19,7 @@ class Product extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class)
+        return $this->belongsToMany(Order::class, OrderProduct::class)
             ->withPivot('quantity')->withTimestamps();
     }
 }

@@ -10,15 +10,7 @@ class Ingredient extends Model
 {
     use HasFactory;
 
-    protected static function booted(): void
-    {
-        static::created(function (Ingredient $ingredient) {
-            IngredientStockHistory::create([
-               'ingredient_id' => $ingredient->id,
-               'stock' => $ingredient->stock
-            ]);
-        });
-    }
+    protected $guarded = ['id'];
 
     public function products()
     {
