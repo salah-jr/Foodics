@@ -41,9 +41,15 @@ class OrderRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-             'message' => implode('', collect($validator->errors())->first()),
-             'status' => true
-        ], 422));
+        $errors = $validator->errors()->toArray();
+
+        // Customize the response format based on your requirements
+        $response = [
+            'message' => 'Validation failed',
+            'errors' => $errors,
+            'status' => false,
+        ];
+
+        throw new HttpResponseException(response()->json($response, 422));
     }
 }

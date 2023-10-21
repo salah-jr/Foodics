@@ -42,7 +42,7 @@ class OrderService
                     $newAvailableStock = $ingredient->available_stock - $requiredIngredientInKg;
 
                     if (!$emailSent && $newAvailableStock < $ingredient->stock * 0.5) {
-                        $this->sendEmail($ingredient);
+//                        $this->sendEmail($ingredient);
                     }
 
                     $ingredient->update([
@@ -57,7 +57,10 @@ class OrderService
 
             DB::commit();
 
-            return response()->json(['message' => 'Order placed successfully'], 200);
+            return response()->json([
+                'order_id' => $order->id,
+                'message' => 'Order placed successfully'
+            ], 200);
 
         } catch (Exception $e) {
             DB::rollBack();
