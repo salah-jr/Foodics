@@ -40,8 +40,8 @@ class OrderService
                     if ($ingredient->available_stock < $ingredient->stock * 0.5) $emailSent = true;
 
                     /**
-                     * For simplicity When `$emailSent = true` means that the email is already sent before,
-                     * We could store the sending email status in the cache or inside a DB column.
+                     * When `$emailSent = true` means that the email is already sent before,
+                     * Alternatives: We could store the sending email status in the cache or inside a DB column.
                      */
                     if (!$emailSent && $newAvailableStock < $ingredient->stock * 0.5) {
                         $this->sendEmail($ingredient);
