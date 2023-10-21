@@ -21,7 +21,7 @@ This is a simple system for a restaurant that tracks stock levels of ingredients
 
 Follow these steps to set up the project:
 
-1. Clone the repository: `https://github.com/salah-jr/Foodics-Task.git`
+1. Clone the repository: `git clone https://github.com/salah-jr/Foodics-Task.git`
 2. Navigate to the project directory
 3. Install dependencies: `composer install`
 4. Create a `.env` file based on `.env.example` and configure your database or use a sqlite database.
