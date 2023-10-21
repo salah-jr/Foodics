@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderService
 {
-    public function handle(OrderRequest $request) {
+    public function handle(OrderRequest $request): \Illuminate\Http\JsonResponse
+    {
         $products = $request->get('products');
         $order = Order::create();
 
@@ -27,19 +28,19 @@ class OrderService
                 $order->products()->attach($product->id, ['quantity' => $quantity]);
 
                 foreach ($product->ingredients as $ingredient) {
-                    $requiredIngredientInGrams = $ingredient->pivot->quantity * $quantity;
-                    $requiredIngredientInKilograms = $requiredIngredientInGrams / 1000;
+                    $requiredIngredientGm = $ingredient->pivot->quantity * $quantity;
+                    $requiredIngredientInKg = $requiredIngredientGm / 1000;
 
-                    if ($ingredient->available_stock < $requiredIngredientInKilograms) {
+                    if ($ingredient->available_stock < $requiredIngredientInKg) {
                         return response()->json(['error' => 'Insufficient stock for ' . $ingredient->name], 400);
                     }
 
                     $emailSent = false;
 
-                    // Email already sent before
+                    // Email already sent before (We could store it in the cache or inside a DB column)
                     if ($ingredient->available_stock < $ingredient->stock * 0.5) $emailSent = true;
 
-                    $newAvailableStock = $ingredient->available_stock - $requiredIngredientInKilograms;
+                    $newAvailableStock = $ingredient->available_stock - $requiredIngredientInKg;
 
                     if (!$emailSent && $newAvailableStock < $ingredient->stock * 0.5) {
                         $this->sendEmail($ingredient);
