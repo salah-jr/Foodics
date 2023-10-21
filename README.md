@@ -14,6 +14,7 @@ This is a simple system for a restaurant that tracks stock levels of ingredients
 
 - PHP 8.1
 - Laravel 10
+- Composer 2
 - PHPUnit for testing
 - Laravel Mailable for email notifications
 
