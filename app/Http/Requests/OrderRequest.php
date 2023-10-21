@@ -43,7 +43,6 @@ class OrderRequest extends FormRequest
     {
         $errors = $validator->errors()->toArray();
 
-        // Customize the response format based on your requirements
         $response = [
             'message' => 'Validation failed',
             'errors' => $errors,

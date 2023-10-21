@@ -109,9 +109,9 @@ class OrderControllerTest extends TestCase
     {
         $product = Product::factory()->create();
 
-        $ingredient1 = Ingredient::factory()->create();
+        $ingredient = Ingredient::factory()->create();
 
-        $product->ingredients()->attach($ingredient1, ['quantity' => 250]);
+        $product->ingredients()->attach($ingredient, ['quantity' => 250]);
 
         $response = $this->postJson('/api/place-order', [
             'products' => [
@@ -221,7 +221,7 @@ class OrderControllerTest extends TestCase
     /**
      * @test
      */
-    public function itDontSendAnEmailIfIsSentBefore()
+    public function itDoesntSendAnEmailIfIsSentBefore()
     {
         Mail::fake();
 
@@ -236,7 +236,7 @@ class OrderControllerTest extends TestCase
 
         $response = $this->postJson('/api/place-order', [
             'products' => [
-                ['product_id' => $product->id, 'quantity' => 2],
+                ['product_id' => $product->id, 'quantity' => 2], // 1.2 KG
             ],
         ]);
 
