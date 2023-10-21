@@ -21,7 +21,7 @@ class IngredientLowStockMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('system@example.com', 'Store'),
+            from: new Address(config('mail.from.address'), config('mail.from.name')),
             to: [
                 new Address('merchant@example.com', 'Merchant Name'),
             ],
