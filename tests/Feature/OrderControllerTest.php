@@ -6,7 +6,6 @@ use App\Mail\IngredientLowStockMail;
 use App\Models\Ingredient;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
