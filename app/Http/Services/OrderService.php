@@ -7,7 +7,6 @@ use App\Mail\IngredientLowStockMail;
 use App\Models\Ingredient;
 use App\Models\Order;
 use App\Models\Product;
-use http\Client\Request;
 use http\Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
