@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ProductIngredient extends Pivot
 {
     use HasFactory;
+
+    protected $table = "product_ingredients";
 }

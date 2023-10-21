@@ -2,19 +2,31 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Order;
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\OrderRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function placeOrder(Request $request)
+    public function placeOrder(OrderRequest $request)
     {
-        $request->validate([
-           'products' => 'required|array',
-           'products.*.product_id' => 'required|exists:products,id',
-           'products.*.quantity' => 'required|integer|min:1',
-        ]);
+        $products = $request->get('products');
 
+        //        DB::beginTransaction();
 
+        //        $order = Order::create();
+
+        foreach ($products as $productDetails) {
+
+            $product = Product::findOrFail($productDetails['product_id']);
+            $quantity = $productDetails['quantity'];
+
+            foreach ($product->ingredients as $ingredient) {
+               $totalUsedQuantityInGrams = $ingredient->pivot->quantity * $quantity;
+               $totalQuantityInKilograms = $totalUsedQuantityInGrams / 1000;
+            }
+        }
     }
 }

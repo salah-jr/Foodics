@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         Product::create(['name' => 'Burger']);
-        Product::create(['name' => 'Pizza']);
-        Product::create(['name' => 'Pasta']);
+//        Product::create(['name' => 'Pizza']);
+//        Product::create(['name' => 'Pasta']);
     }
 }
