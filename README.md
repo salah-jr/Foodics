@@ -49,3 +49,25 @@ Follow these steps to set up the project:
 ## Testing
 
 Run the test suite using PHPUnit: `php artisan test`
+
+## System Components
+
+### Database Tables
+- **orders**: Stores information about customer orders.
+- **order_products**: Contains details of products included in each order.
+- **products**: Represents various products available for ordering.
+- **ingredients**: Manages the inventory and stock levels of ingredients.
+- **product_ingredients**: Links products to their respective ingredients with quantities.
+
+### Request Validation
+- **Order Request Validation**: Request validation is handled by a custom request class located at `app/Http/Requests/OrderRequest.php`.
+
+### Controller
+- **Order Controller**: The order controller, located at `app/Http/Controllers/Api/OrderController.php`, manages the HTTP request handling and responses for placing orders.
+
+### Service Logic
+- **Order Service Logic**: The order service class, found at `app/Http/Services/OrderService.php`, contains the core business logic for processing orders.
+
+### Tests
+- **Order Controller Test Cases**: The test cases for the order controller are implemented in the test class located at `tests/Feature/OrderControllerTest.php`. These tests ensure that the order placement, validation and stock management functionality works as expected.
+
