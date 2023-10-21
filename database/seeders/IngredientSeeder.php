@@ -12,9 +12,9 @@ class IngredientSeeder extends Seeder
      */
     public function run(): void
     {
-        Ingredient::create(['name' => 'Beef', 'stock' => 20.0]);
-        Ingredient::create(['name' => 'Cheese', 'stock' => 5.0]);
-        Ingredient::create(['name' => 'Onion', 'stock' => 1.0]);
+        Ingredient::create(['name' => 'Beef', 'stock' => 20.0, 'available_stock' => 20.0]);
+        Ingredient::create(['name' => 'Cheese', 'stock' => 5.0, 'available_stock' => 5.0]);
+        Ingredient::create(['name' => 'Onion', 'stock' => 1.0, 'available_stock' => 1.0]);
 //        Ingredient::create(['name' => 'Tomato', 'stock' => 2.5]);
 //        Ingredient::create(['name' => 'Mushroom', 'stock' => 3.0]);
 //        Ingredient::create(['name' => 'Lettuce', 'stock' => 1.8]);
