@@ -4,6 +4,8 @@
 
 This is a simple system for a restaurant that tracks stock levels of ingredients, handles orders, and sends email alerts to merchants when ingredient stocks fall below 50%.
 
+[Notes](#notes)
+
 ## Features
 
 - Order placement with stock deduction
