@@ -71,3 +71,24 @@ Run the test suite using PHPUnit: `php artisan test`
 ### Tests
 - **Order Controller Test Cases**: The test cases for the order controller are implemented in the test class located at `tests/Feature/OrderControllerTest.php`. These tests ensure that the order placement, validation and stock management functionality works as expected.
 
+## Notes
+**If an ingredient's stock is refilled, the update stock action should perform the following steps:**
+  - Calculate the new available stock by adding the current available stock to the new stock quantity.
+  - Update the available stock to be equal to the new stock quantity.
+ - If we're using cache for email tracking, We should remove the email_sent key from the cache to ensure that a new email notification can be sent if the stock level falls below 50% again.
+
+<br>
+
+  When `$emailSent = true` means that the current stock before this order is already below 50% then the email is already sent before,
+  Alternatives: We could store the sending email status in the cache (Redis) or inside the DB.
+
+  ![img_1.png](img_1.png)
+
+
+**The cache solution will be something like this**
+```
+     if (!Cache::has('email_sent_' . $ingredient->id) && $newAvailableStock < $ingredient->stock * 0.5) {
+         $this->sendEmail($ingredient);
+         Cache::put('email_sent_' . $ingredient->id, true);
+      }
+   ```
