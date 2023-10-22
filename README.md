@@ -76,19 +76,20 @@ Run the test suite using PHPUnit: `php artisan test`
 
 ## Notes
 **If an ingredient's stock is refilled, the update stock action should perform the following steps:**
-  - Calculate the new available stock by adding the current available stock to the new stock quantity.
-  - Update the available stock to be equal to the new stock quantity.
- - If we're using cache for email tracking, We should remove the email_sent key from the cache to ensure that a new email notification can be sent if the stock level falls below 50% again.
+  - Calculate the stock by adding the current available stock to the new stock.
+  - Update the available stock to be equal to the new stock quantity to start the process again.
+  - If we're using cache for email tracking, We should remove the email_sent key from the cache to ensure that a new email notification can be sent if the stock level falls below 50% again.
 
 <br>
 
-  When `$emailSent = true` means that the current stock before this order is already below 50% then the email is already sent before,
-  Alternatives: We could store the sending email status in the cache (Redis) or inside the DB.
+**Sending email current solution explanation:**
+  - When `$emailSent = true` means that the current stock before this order is already below 50% then the email is already sent before,
+   Alternatives: We could store the sending email status in the cache (Redis) or inside the DB.
 
  ![image](https://github.com/salah-jr/Foodics-Task/assets/26637798/b1a2e425-8616-4745-9017-27106cd27153)
 
 
-**The cache solution will be something like this**
+**The cache solution will be like this** 
 ```
      if (!Cache::has('email_sent_' . $ingredient->id) && $newAvailableStock < $ingredient->stock * 0.5) {
          $this->sendEmail($ingredient);
