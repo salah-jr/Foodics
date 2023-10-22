@@ -77,7 +77,7 @@ Run the test suite using PHPUnit: `php artisan test`
 <br>
 
 ## Notes
-**If an ingredient's stock is refilled, the update stock action should perform the following steps:**
+**If an ingredient's stock is refilled, the update stock action (not implemented) should perform the following steps:**
   - Calculate the stock by adding the current available stock to the new stock.
   - Update the available stock to be equal to the new stock quantity to start the process again.
   - If we're using cache for email tracking, We should remove the email_sent key from the cache to ensure that a new email notification can be sent if the stock level falls below 50% again.
