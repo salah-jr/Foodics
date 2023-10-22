@@ -55,24 +55,26 @@ Run the test suite using PHPUnit: `php artisan test`
 
 ## System Components
 
-### Database Tables
+#### Database Tables
 - **orders**: Stores information about customer orders.
 - **order_products**: Contains details of products included in each order.
 - **products**: Represents various products available for ordering.
 - **ingredients**: Manages the inventory and stock levels of ingredients.
 - **product_ingredients**: Links products to their respective ingredients with quantities.
 
-### Request Validation
+#### Request Validation
 - **Order Request Validation**: Request validation is handled by a custom request class located at `app/Http/Requests/OrderRequest.php`.
 
-### Controller
+#### Controller
 - **Order Controller**: The order controller, located at `app/Http/Controllers/Api/OrderController.php`, manages the HTTP request handling and responses for placing orders.
 
-### Service Logic
+#### Service Logic
 - **Order Service Logic**: The order service class, found at `app/Http/Services/OrderService.php`, contains the core business logic for processing orders.
 
-### Tests
+#### Tests
 - **Order Controller Test Cases**: The test cases for the order controller are implemented in the test class located at `tests/Feature/OrderControllerTest.php`. These tests ensure that the order placement, validation and stock management functionality works as expected.
+
+<br>
 
 ## Notes
 **If an ingredient's stock is refilled, the update stock action should perform the following steps:**
@@ -89,7 +91,7 @@ Run the test suite using PHPUnit: `php artisan test`
  ![image](https://github.com/salah-jr/Foodics-Task/assets/26637798/b1a2e425-8616-4745-9017-27106cd27153)
 
 
-**The cache solution will be like this** 
+- **The cache solution will be like this** 
 ```
      if (!Cache::has('email_sent_' . $ingredient->id) && $newAvailableStock < $ingredient->stock * 0.5) {
          $this->sendEmail($ingredient);
