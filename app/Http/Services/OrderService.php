@@ -35,13 +35,25 @@ class OrderService
                     }
 
                     $newAvailableStock = $ingredient->available_stock - $requiredIngredientInKg;
+
                     $emailSent = false;
 
-                    if ($ingredient->available_stock < $ingredient->stock * 0.5) $emailSent = true;
+                    if ($ingredient->available_stock < $ingredient->stock * 0.5)
+                        $emailSent = true;
 
                     if (!$emailSent && $newAvailableStock < $ingredient->stock * 0.5) {
                         $this->sendEmail($ingredient);
                     }
+
+                    /**
+                     * @note
+                     * OR Alternatively
+                     *
+                     * if (!Cache::has('email_sent_' . $ingredient->id) && $newAvailableStock < $ingredient->stock * 0.5) {
+                     *      $this->sendEmail($ingredient);
+                     *      Cache::put('email_sent_' . $ingredient->id, true);
+                     * }
+                     */
 
                     $ingredient->update([
                         'available_stock' => $newAvailableStock
