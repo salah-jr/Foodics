@@ -49,10 +49,10 @@ class OrderService
                      * @note
                      * OR Alternatively
                      *
-                     * if (!Cache::has('email_sent_' . $ingredient->id) && $newAvailableStock < $ingredient->stock * 0.5) {
+                     *  if (!Cache::has('email_sent_' . $ingredient->id) && $newAvailableStock < $ingredient->stock * 0.5) {
                      *      $this->sendEmail($ingredient);
                      *      Cache::put('email_sent_' . $ingredient->id, true);
-                     * }
+                     *  }
                      */
 
                     $ingredient->update([
